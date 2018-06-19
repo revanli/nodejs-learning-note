@@ -9,8 +9,9 @@ const proxy = http.createServer((req, res) => {
   res.end('okay');
 });
 
+
+// connect to an origin server
 proxy.on('connect', (req, cltSocket, head) => {
-  // connect to an origin server
   const srvUrl = url.parse('http://' + req.url);
   console.log('srvUrl>>>', srvUrl);
   const srvSocket = net.connect(srvUrl.port, srvUrl.hostname, () => {
