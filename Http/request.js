@@ -1,37 +1,16 @@
 
 const http = require('http');
+const url = require('url');
+const queryString = require('querystring');
 
-const postData = JSON.stringify({
-  'msg': 'Hello World'
-});
+var server = http.createServer(function (req, res) {
+  var urlObj = url.parse(req.url);
+  var query = urlObj.query;
+  var queryObj = queryString.parse(query);
 
-const options = {
-  hostname: 'www.google.com',
-  port: 80,
-  path: '/upload',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Content-Length': Buffer.byteLength(postData)
-  }
-}
+  console.log('4、http请求头部: ' + JSON.stringify(queryObj));
 
-const req = http.request(options, (res) => {
-  console.log(`STATUS: ${res.statusCode}`);
-  console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-  res.setEncoding('utf8');
-  res.on('data', (chunk) => {
-    console.log(`BODY: ${chunk}`);
-  });
-  res.on('end', () => {
-    console.log('No more data in response.');
-  });
-});
-
-req.on('error', (e) => {
-  console.error(`problem with request: ${e.message}`);
+  res.end('ok');
 })
 
-// write data to request body
-req.write(postData);
-req.end();
+server.listen(3000);
