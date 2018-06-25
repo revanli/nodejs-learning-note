@@ -11,6 +11,6 @@ var server = http.createServer(function (req, res) {
   console.log('4、http请求头部: ' + JSON.stringify(queryObj));
 
   res.end('ok');
-})
+});
 
 server.listen(3000);
